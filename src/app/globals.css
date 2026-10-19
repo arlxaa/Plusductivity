@@ -1,0 +1,248 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Unbounded", "Syne", system-ui, sans-serif;
+  --font-sans: "Inter", "DM Sans", system-ui, sans-serif;
+
+  --color-ink: #0b0b0d;
+  --color-card: #141417;
+  --color-accent-pink: #f9a8d4;
+  --color-accent-mint: #b8f58b;
+  --color-accent-yellow: #fdf3a7;
+  --color-accent-lavender: #d8b4fe;
+
+  --animate-float-slow: float 7s ease-in-out infinite;
+  --animate-float-fast: float 4.5s ease-in-out infinite;
+  --animate-spin-slower: spin-slower 14s linear infinite;
+}
+
+body {
+  background: #0b0b0d;
+  color: #f4f4f5;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(249, 168, 212, 0.85);
+  color: #0b0b0d;
+}
+
+/* Cinematic backdrop: pink glow top-left, mint glow top-right, faint grid */
+.app-glow {
+  background:
+    radial-gradient(700px 340px at 18% -2%, rgba(249, 168, 212, 0.14), transparent 70%),
+    radial-gradient(750px 380px at 85% 8%, rgba(184, 245, 139, 0.09), transparent 70%),
+    radial-gradient(600px 500px at 50% 110%, rgba(216, 180, 254, 0.07), transparent 70%),
+    #0b0b0d;
+}
+
+/* Bento card: rounded 24px, 1px white/8 border, glassy, hover lift */
+.bento-card {
+  position: relative;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.028));
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 50px -30px rgba(0, 0, 0, 0.8);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.bento-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 26px 60px -28px rgba(249, 168, 212, 0.25);
+}
+
+/* Tinted card variants for playful accents */
+.card-tint-pink {
+  background: linear-gradient(135deg, #f9a8d4, #f472b6 60%, #ec4899);
+  border-color: transparent;
+  color: #0b0b0d;
+}
+.card-tint-mint {
+  background: linear-gradient(135deg, rgba(184, 245, 139, 0.16), rgba(184, 245, 139, 0.05));
+}
+.card-tint-yellow {
+  background: linear-gradient(135deg, rgba(253, 243, 167, 0.14), rgba(253, 243, 167, 0.04));
+}
+
+/* Pill buttons like the reference: filled pink + outlined ghost */
+.btn-pill {
+  border-radius: 999px;
+  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+}
+.btn-pill:hover {
+  transform: translateY(-1px);
+}
+.btn-pill:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Playful rotated preview cards that straighten on hover */
+.tilt-left {
+  transform: rotate(-2deg);
+}
+.tilt-right {
+  transform: rotate(1.5deg);
+}
+.tilt-left:hover,
+.tilt-right:hover {
+  transform: rotate(0deg) translateY(-3px);
+}
+
+/* Floating decor */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(6deg);
+  }
+}
+
+/* Thin progress slider like "Start earning now 80%" */
+.pretty-range {
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  outline: none;
+}
+.pretty-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #f9a8d4;
+  border: 2px solid #0b0b0d;
+  box-shadow: 0 0 0 1.5px #f9a8d4;
+}
+
+@keyframes spin-slower {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+:root {
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bento-card,
+  .btn-pill,
+  .tilt-left,
+  .tilt-right,
+  [class*="animate-"] {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+}
+
+/* ---------- Light theme (toggle via <html class="light">) ---------- */
+.light {
+  color-scheme: light;
+}
+
+.light body {
+  background: #eef0f6;
+  color: #17181c;
+}
+
+.light .app-glow {
+  background:
+    radial-gradient(700px 340px at 18% -2%, rgba(219, 39, 119, 0.12), transparent 70%),
+    radial-gradient(750px 380px at 85% 8%, rgba(101, 163, 13, 0.12), transparent 70%),
+    radial-gradient(600px 500px at 50% 110%, rgba(124, 58, 237, 0.08), transparent 70%),
+    #eef0f6;
+}
+
+.light .bento-card {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(15, 18, 28, 0.1);
+  box-shadow: 0 18px 40px -28px rgba(30, 30, 60, 0.25);
+}
+.light .bento-card:hover {
+  border-color: rgba(15, 18, 28, 0.2);
+  box-shadow: 0 22px 48px -26px rgba(219, 39, 119, 0.3);
+}
+
+/* Remap dark-first utilities used across widgets */
+.light .text-white {
+  color: #17181c !important;
+}
+.light .text-zinc-300 {
+  color: #3d4150 !important;
+}
+.light .text-zinc-400 {
+  color: #5d6272 !important;
+}
+.light .text-zinc-500 {
+  color: #8b90a1 !important;
+}
+.light .text-white\/25 {
+  color: rgba(15, 18, 28, 0.25) !important;
+}
+.light .text-white\/20 {
+  color: rgba(15, 18, 28, 0.2) !important;
+}
+.light .text-white\/15 {
+  color: rgba(15, 18, 28, 0.18) !important;
+}
+.light .text-accent-pink {
+  color: #db2777 !important;
+}
+.light .text-accent-mint {
+  color: #4d7c0f !important;
+}
+.light .text-accent-yellow {
+  color: #a16207 !important;
+}
+.light .bg-black\/30,
+.light .bg-black\/40 {
+  background-color: rgba(15, 18, 28, 0.05) !important;
+}
+.light .bg-white\/5,
+.light .bg-white\/10 {
+  background-color: rgba(15, 18, 28, 0.05) !important;
+}
+.light .hover\:bg-white\/10:hover {
+  background-color: rgba(15, 18, 28, 0.08) !important;
+}
+.light .border-white\/8,
+.light .border-white\/10,
+.light .border-white\/15,
+.light .border-white\/20 {
+  border-color: rgba(15, 18, 28, 0.14) !important;
+}
+.light input,
+.light select,
+.light textarea {
+  color-scheme: light;
+}
+
+/* Pomodoro ring + time readable on light cards */
+.light .ring-track {
+  stroke: rgba(15, 18, 28, 0.12);
+}
+.light .ring-text {
+  fill: #17181c;
+}
+
+/* Slow breathing glow for focus mode */
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.08);
+  }
+}
+.breathe {
+  animation: breathe 6s ease-in-out infinite;
+}
